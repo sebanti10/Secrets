@@ -76,9 +76,7 @@ router.post("/submit", (req, res) => {
         else {
             if (foundUser) {
                 foundUser.secret = submittedSecret;
-                foundUser.save(function () {
-                    res.redirect("/secrets");
-                });
+                foundUser.save(() => res.redirect("/secrets"));
             }
         }
     });
