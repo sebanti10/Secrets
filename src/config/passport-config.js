@@ -18,19 +18,19 @@ function initializePassport(passport) {
 
     const callBackURL = process.env.NODE_ENV === 'production' ? callBackProdURL : callBackLocalURL;
 
-    // passport.use(new GoogleStrategy({
-    //         clientID: process.env.CLIENT_ID,
-    //         clientSecret: process.env.CLIENT_SECRET,
-    //         callbackURL: callBackURL,
-    //         userProfileURL: userProfileURL
-    //     },
-    //     (accessToken, refreshToken, profile, cb) => {
-    //         //console.log(profile);
-    //         User.findOrCreate({
-    //             googleId: profile.id
-    //         }, (err, user) => cb(err, user));
-    //     }
-    // ));
+    passport.use(new GoogleStrategy({
+            clientID: process.env.CLIENT_ID,
+            clientSecret: process.env.CLIENT_SECRET,
+            callbackURL: "https://post-your-anonymous-secrets.herokuapp.com/auth/google/secrets",
+            userProfileURL: userProfileURL
+        },
+        (accessToken, refreshToken, profile, cb) => {
+            //console.log(profile);
+            User.findOrCreate({
+                googleId: profile.id
+            }, (err, user) => cb(err, user));
+        }
+    ));
 }
 
 module.exports = initializePassport;
